@@ -2,23 +2,30 @@
 #include <stdlib.h>
 
 
-int createNode(int id){
-    int *newNode = (node)malloc(sizeof(node));
-    if (newNode == NULL) {
+int createNode(int id) {
+    node *n = malloc(sizeof(node));
+    if (n == NULL) {
         printf("Error: malloc failed in makeNode");
         exit(1);
     }
-    newNode->nodeID = id;
-    newNode->next = NULL;
-    newNode->edge = NULL;
-    return newNode;
-        
+    n->nodeID = id;
+    n->next = NULL;
+    n->edge = NULL;
+    if (head == NULL) {
+        head = n;
+    } else {
+        node *temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = n;
+    }
 }
 
 typedef struct Nodes{
     int nodeID;
-    struct node *next;
     struct edge *edge;
+    struct node *next;
 } node;
 
 void addEdge(node *n, int endNode, int weight) {
