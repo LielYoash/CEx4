@@ -1,18 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "edges.h"
+#include "nodes.h"
 
 
 node *createNode(int id);
 void deleteNodes(int id, node *head);
 void addToEnd(node *head, int id);
 node getNode(int id, node *head);
-
-typedef struct Nodes{
-    int nodeID;
-    struct edge *edge;
-    struct node *next;
-} node;
 
 node *createNode(int id) {
     node *node = malloc(sizeof(node));
@@ -24,7 +19,6 @@ node *createNode(int id) {
     node->edge = NULL;
     return node;
 }
-
 
 void deleteNodes(int id, node *head){
     node *temp = head;
@@ -43,6 +37,7 @@ void deleteNodes(int id, node *head){
         temp = temp->next;
     }
 }
+
 void addNodeToEnd(node *head, int id){
     node *temp = head;
     while (temp->next != NULL) {
