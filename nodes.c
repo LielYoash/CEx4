@@ -4,16 +4,16 @@
 #include "nodes.h"
 
 
-node *createNode(int id);
-void deleteNodes(int id, node *head);
-void addToEnd(node *head, int id);
-node getNode(int id, node *head);
-
-typedef struct Nodes{
+typedef struct Node{
     int nodeID;
     struct edge *edge;
     struct node *next;
 } node;
+
+node *createNode(int id);
+void deleteNodes(int id, node *head);
+void addToEnd(node *head, int id);
+node getNode(int id, node *head);
 
 node *createNode(int id) {
     node *node = malloc(sizeof(node));

@@ -1,10 +1,10 @@
-#ifdef NODES_H
+#ifndef NODES_H
 #define NODES_H
 
 // Description: Header file for nodes.c
 
-typedef struct Edges edge;
-typedef struct Nodes node;
+typedef struct Edge edge;
+typedef struct Node node;
 
 
 node *createNode(int id);
