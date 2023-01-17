@@ -11,9 +11,17 @@ void addEdge(int src, int dest, int weight, node *head);
 void cleanEdges(edge *edge);
 
 
+typedef struct Edges
+{
+    int startNode;
+    int endNode;
+    int weight;
+    struct edge *next;
+} edge;
+
 edge *createEdge(node *endNode, int weight)
 {
-    Edge *edge = malloc(sizeof(Edge));
+    edge *edge = malloc(sizeof(Edge));
     if (edge == NULL)
     {
         return NULL;

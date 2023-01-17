@@ -1,27 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "algo.h"
+#include "nodes.h"
+#include "edges.h"
 
-int main(void)
+int main()
 {
     printf("welcome");
     char c;
-    scanf("%c", &c);
-    switch (c)
+    while (1)
     {
-    case 'A':
-        A;
-        break;
-    case 'B':
-        B;
-        break;
-    case 'D':
-        D;
-        break;
-    case 'S':
-        S;
-        break;
-    case 'T':
-        T;
-        break;
-    
+        scanf("%c", &c);
+        switch (c)
+        {
+        case 'A':
+            A;
+            break;
+        case 'B':
+            B;
+            break;
+        case 'D':
+            D;
+            break;
+        case 'S':
+            S;
+            break;
+        case 'T':
+            T;
+            break;
+        }
     }
 }
