@@ -1,26 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "edges.h"
 
 
-int createNode(int id) {
-    node *n = malloc(sizeof(node));
-    if (n == NULL) {
-        printf("Error: malloc failed in makeNode");
-        exit(1);
-    }
-    n->nodeID = id;
-    n->next = NULL;
-    n->edge = NULL;
-    if (head == NULL) {
-        head = n;
-    } else {
-        node *temp = head;
-        while (temp->next != NULL) {
-            temp = temp->next;
-        }
-        temp->next = n;
-    }
-}
+node *createNode(int id);
+void deleteNodes(int id, node *head);
+void addToEnd(node *head, int id);
+node getNode(int id, node *head);
 
 typedef struct Nodes{
     int nodeID;
@@ -28,44 +14,52 @@ typedef struct Nodes{
     struct node *next;
 } node;
 
-void addEdge(node *n, int endNode, int weight) {
-    edge *e = malloc(sizeof(edge));
-    if (e == NULL) {
-        printf("Error: malloc failed in makeEdge");
-        exit(1);
+node *createNode(int id) {
+    node *node = malloc(sizeof(node));
+    if (node == NULL) {
+        return NULL;
     }
-    e->startNode = n->nodeID;
-    e->endNode = endNode;
-    e->weight = weight;
-    e->next = NULL;
-    if (n->edge == NULL) {
-        n->edge = e;
-    } else {
-        edge *temp = n->edge;
-        while (temp->next != NULL) {
-            temp = temp->next;
+    node->nodeID = id;
+    node->next = NULL;
+    node->edge = NULL;
+    return node;
+}
+
+
+void deleteNodes(int id, node *head){
+    node *temp = head;
+    node *prev = NULL;
+    while (temp != NULL) {
+        if (temp->nodeID == id) {
+            if (prev == NULL) {
+                head = temp->next;
+            } else {
+                prev->next = temp->next;
+            }
+            free(temp);
+            return;
         }
-        temp->next = e;
+        prev = temp;
+        temp = temp->next;
     }
 }
-void startOver(){
+void addNodeToEnd(node *head, int id){
+    node *temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = createNode(id);
+}
+
+node getNode(int id, node *head){
     node *temp = head;
     while (temp != NULL) {
-        edge *temp2 = temp->edge;
-        while (temp2 != NULL) {
-            edge *temp3 = temp2;
-            temp2 = temp2->next;
-            free(temp3);
+        if (temp->nodeID == id) {
+            return *temp;
         }
-        node *temp4 = temp;
         temp = temp->next;
-        free(temp4);
     }
-    head = NULL;
+    return NULL;
 }
-
-
-
-
 
 
