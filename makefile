@@ -9,7 +9,7 @@ libFuncs.so: $(OBJS)
 	$(CC) -shared -fPIC -o libFuncs.so $(OBJS)
 
 graph: main.o libFuncs.so
-	$(CC) $(CFLAGS) -o graph main.o libFuncs.so
+	$(CC) $(CFLAGS) -o graph main.o -L. -lFuncs
 
 functions: libFuncs.so
 

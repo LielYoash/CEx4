@@ -26,9 +26,10 @@ int main()
         case 'S':
             S(graph);
             break;
-        // case 'T':
-        //     T();
-        //     break;
+        case 'T':
+            T();
+            break;
         }
     }
+    deleteGraph(graph);
 }

@@ -7,13 +7,18 @@
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 void deleteGraph(node *head);
+int min(int a, int b);
 void A(node *head);
 void B(node *head);
 void D(node *head);
+void S(node *head);
+void shortestPathFunc(int startNodeID, int endNodeID, node *head);
+
+
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head)
 {
-    while (endNodeId != -1 && weight != 0)
+    while (endNodeId != 0 && weight != 0)
     {
         if (isalpha(startNodeID) || isalpha(endNodeId) || isalpha(weight))
         {
@@ -38,6 +43,21 @@ void deleteGraph(node *head)
         node *temp4 = temp;
         temp = temp->next;
         free(temp4);
+    }
+}
+
+int min(int a, int b){
+    if(a==0){
+        return b;
+    }
+    if(b==0){
+        return a;
+    }
+    if(a<b){
+        return a;
+    }
+    else{
+        return b;
     }
 }
 
@@ -119,33 +139,41 @@ void S(node *head)
     printf("%d", shortestPathFunc(startNodeID, endNodeID, head));
 }
 
-void shortestPathFunc(int startNodeID, int endNodeID, node *head){
+void shortestPathFunc(int startNodeID, int endNodeID, node *head)
+{
     int *dist = malloc(sizeof(int) * 100);
     int *prev = malloc(sizeof(int) * 100);
     int *visited = malloc(sizeof(int) * 100);
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++)
+    {
         dist[i] = 1000000;
         prev[i] = -1;
         visited[i] = 0;
     }
     dist[startNodeID] = 0;
     node *temp = head;
-    while (temp != NULL) {
+    while (temp != NULL)
+    {
         int min = 1000000;
         int minIndex = -1;
-        for (int i = 0; i < 100; i++) {
-            if (visited[i] == 0 && dist[i] < min) {
+        for (int i = 0; i < 100; i++)
+        {
+            if (visited[i] == 0 && dist[i] < min)
+            {
                 min = dist[i];
                 minIndex = i;
             }
         }
-        if (minIndex == -1) {
+        if (minIndex == -1)
+        {
             break;
         }
         visited[minIndex] = 1;
         edge *temp2 = temp->edge;
-        while (temp2) {
-            if (dist[temp2->endNode] > dist[minIndex] + temp2->weight) {
+        while (temp2)
+        {
+            if (dist[temp2->endNode] > dist[minIndex] + temp2->weight)
+            {
                 dist[temp2->endNode] = dist[minIndex] + temp2->weight;
                 prev[temp2->endNode] = minIndex;
             }
@@ -154,4 +182,76 @@ void shortestPathFunc(int startNodeID, int endNodeID, node *head){
         temp = temp->next;
     }
     return dist[endNodeID];
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void travelingSalesman(node *head){
+    int *dist = malloc(sizeof(int) * 100);
+    int *prev = malloc(sizeof(int) * 100);
+    int *visited = malloc(sizeof(int) * 100);
+    for (int i = 0; i < 100; i++)
+    {
+        dist[i] = 1000000;
+        prev[i] = -1;
+        visited[i] = 0;
+    }
+    dist[0] = 0;
+    node *temp = head;
+    while (temp != NULL)
+    {
+        int min = 1000000;
+        int minIndex = -1;
+        for (int i = 0; i < 100; i++)
+        {
+            if (visited[i] == 0 && dist[i] < min)
+            {
+                min = dist[i];
+                minIndex = i;
+            }
+        }
+        if (minIndex == -1)
+        {
+            break;
+        }
+        visited[minIndex] = 1;
+        edge *temp2 = temp->edge;
+        while (temp2)
+        {
+            if (dist[temp2->endNode] > dist[minIndex] + temp2->weight)
+            {
+                dist[temp2->endNode] = dist[minIndex] + temp2->weight;
+                prev[temp2->endNode] = minIndex;
+            }
+            temp2 = temp2->next;
+        }
+        temp = temp->next;
+    }
+    int min = 1000000;
+    int minIndex = -1;
+    for (int i = 0; i < 100; i++)
+    {
+        if (visited[i] == 0 && dist[i] < min)
+        {
+            min = dist[i];
+            minIndex = i;
+        }
+    }
+    if (minIndex == -1)
+    {
+        break;
+    }
+    visited[minIndex] = 1;
+    edge *temp2 = temp->edge;
+    while (temp2)
+    {
+        if (dist[temp2->endNode] > dist[minIndex] + temp2->weight)
+        {
+            dist[temp2->endNode] = dist[minIndex] + temp2->weight;
+            prev[temp2->endNode] = minIndex;
+        }
+        temp2 = temp2->next;
+    }
+    temp = temp->next;
 }
