@@ -6,7 +6,6 @@
 
 int main()
 {
-    printf("welcome");
     char c;
     node *graph = NULL;
     while (1)
