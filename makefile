@@ -1,17 +1,17 @@
-CFLAGS = -g -Wall
+CFLAGS = -Wall -g
 CC = gcc
 OBJS = algo.o nodes.o edges.o
 LIBS = algo.h nodes.h edges.h
 
 all: graph functions
 
-graph: main.o libFuncs.so
-	$(CC) $(CFLAGS) -o graph main.o -L. -lFuncs
-
-functions: libFuncs.so
-
 libFuncs.so: $(OBJS)
 	$(CC) -shared -fPIC -o libFuncs.so $(OBJS)
+
+graph: main.o libFuncs.so
+	$(CC) $(CFLAGS) -o graph main.o libFuncs.so
+
+functions: libFuncs.so
 
 main.o: main.c $(LIBS)
 	$(CC) $(CFLAGS) -c main.c

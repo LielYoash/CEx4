@@ -4,8 +4,6 @@
 #include "edges.h"
 #include "nodes.h"
 
-
-
 edge *createEdge(node *endNode, int weight);
 void deleteEdges(int nodeID, node *node, edge *edge);
 void insertEdgeToEnd(node *dest,int weight, node *head);

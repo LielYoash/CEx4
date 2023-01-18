@@ -9,6 +9,7 @@ void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 void deleteGraph(node *head);
 void A(node *head);
 void B(node *head);
+void D(node *head);
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head)
 {
@@ -106,4 +107,51 @@ void D(node *head)
         temp = temp->next;
     }
     deleteNodes(id, head);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void S(node *head)
+{
+    int startNodeID, endNodeID;
+    scanf("%d %d", &startNodeID, &endNodeID);
+    printf("%d", shortestPathFunc(startNodeID, endNodeID, head));
+}
+
+void shortestPathFunc(int startNodeID, int endNodeID, node *head){
+    int *dist = malloc(sizeof(int) * 100);
+    int *prev = malloc(sizeof(int) * 100);
+    int *visited = malloc(sizeof(int) * 100);
+    for (int i = 0; i < 100; i++) {
+        dist[i] = 1000000;
+        prev[i] = -1;
+        visited[i] = 0;
+    }
+    dist[startNodeID] = 0;
+    node *temp = head;
+    while (temp != NULL) {
+        int min = 1000000;
+        int minIndex = -1;
+        for (int i = 0; i < 100; i++) {
+            if (visited[i] == 0 && dist[i] < min) {
+                min = dist[i];
+                minIndex = i;
+            }
+        }
+        if (minIndex == -1) {
+            break;
+        }
+        visited[minIndex] = 1;
+        edge *temp2 = temp->edge;
+        while (temp2) {
+            if (dist[temp2->endNode] > dist[minIndex] + temp2->weight) {
+                dist[temp2->endNode] = dist[minIndex] + temp2->weight;
+                prev[temp2->endNode] = minIndex;
+            }
+            temp2 = temp2->next;
+        }
+        temp = temp->next;
+    }
+    return dist[endNodeID];
 }

@@ -21,11 +21,11 @@ int main()
             B(graph);
             break;
         case 'D':
-            D();
+            D(graph);
             break;
-        // case 'S':
-        //     S();
-        //     break;
+        case 'S':
+            S(graph);
+            break;
         // case 'T':
         //     T();
         //     break;

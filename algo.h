@@ -8,6 +8,6 @@ void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 void deleteGraph(node *head);
 void A(node *head);
 void B(node *head);
-
+void D(node *head);
 
 #endif
