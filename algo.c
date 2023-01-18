@@ -237,30 +237,12 @@ void T(node *head){
         }
         temp = temp->next;
     }
-    int min = 1000000;
-    int minIndex = -1;
-    for (int i = 0; i < 100; i++)
+    int path = 0;
+    int temp3 = 0;
+    while (temp3 != 0)
     {
-        if (visited[i] == 0 && dist[i] < min)
-        {
-            min = dist[i];
-            minIndex = i;
-        }
+        path += dist[temp3];
+        temp3 = prev[temp3];
     }
-    if (minIndex == -1)
-    {
-        return;
-    }
-    visited[minIndex] = 1;
-    edge *temp2 = temp->edge;
-    while (temp2)
-    {
-        if (dist[temp2->endNode] > dist[minIndex] + temp2->weight)
-        {
-            dist[temp2->endNode] = dist[minIndex] + temp2->weight;
-            prev[temp2->endNode] = minIndex;
-        }
-        temp2 = temp2->next;
-    }
-    temp = temp->next;
+    printf("%d", path);
 }
