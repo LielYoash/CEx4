@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include "edges.h"
 #include "nodes.h"
-
-
-
+#include <ctype.h>
+#include "algo.h"
 
 node *createNode(int id);
 void deleteNodes(int id, node *head);

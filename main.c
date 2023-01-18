@@ -8,25 +8,26 @@ int main()
 {
     printf("welcome");
     char c;
+    node *graph = NULL;
     while (1)
     {
         scanf("%c", &c);
         switch (c)
         {
         case 'A':
-            A;
+            A(graph);
             break;
-        // case 'B':
-        //     B;
+        case 'B':
+            B(graph);
         //     break;
         // case 'D':
-        //     D;
+        //     D();
         //     break;
         // case 'S':
-        //     S;
+        //     S();
         //     break;
         // case 'T':
-        //     T;
+        //     T();
         //     break;
         }
     }
