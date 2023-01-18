@@ -8,7 +8,7 @@
 
 edge *createEdge(node *endNode, int weight);
 void deleteEdges(int nodeID, node *node, edge *edge);
-void addEdgeToEnd(node dest,int weight, node *head);
+void insertEdgeToEnd(node *dest,int weight, node *head);
 void addEdge(int src, int dest, int weight, node *head);
 void cleanEdges(edge *edge);
 
@@ -51,7 +51,7 @@ void deleteEdges(int nodeID, node *node, edge *e)
     }
 }
 
-void insertEdge(node *dest,int weight, node *head){
+void insertEdgeToEnd(node *dest,int weight, node *head){
     edge *temp = head->edge;
     while (temp->next != NULL) {
         temp = temp->next;
@@ -75,7 +75,7 @@ void addEdge(int src, int dest, int weight, node *head){
     if(!source || !destination){
         return;
     }
-    insertEdge(destination,weight,source);
+    insertEdgeToEnd(destination,weight,source);
 }
 
 void cleanEdges(edge *e)

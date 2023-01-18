@@ -19,10 +19,10 @@ int main()
             break;
         case 'B':
             B(graph);
-        //     break;
-        // case 'D':
-        //     D();
-        //     break;
+            break;
+        case 'D':
+            D();
+            break;
         // case 'S':
         //     S();
         //     break;
