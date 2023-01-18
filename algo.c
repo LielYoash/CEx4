@@ -5,6 +5,8 @@
 #include "algo.h"
 #include <ctype.h>
 
+#define MAX 1000000
+
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 void deleteGraph(node *head);
 int min(int a, int b);
@@ -12,9 +14,8 @@ void A(node *head);
 void B(node *head);
 void D(node *head);
 void S(node *head);
-void shortestPathFunc(int startNodeID, int endNodeID, node *head);
-
-
+void T(node *head);
+int shortestPathFunc( int source, int target, node *head);
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head)
 {
@@ -139,7 +140,7 @@ void S(node *head)
     printf("%d", shortestPathFunc(startNodeID, endNodeID, head));
 }
 
-void shortestPathFunc(int startNodeID, int endNodeID, node *head)
+int shortestPathFunc( int source, int target, node *head)
 {
     int *dist = malloc(sizeof(int) * 100);
     int *prev = malloc(sizeof(int) * 100);
@@ -150,7 +151,7 @@ void shortestPathFunc(int startNodeID, int endNodeID, node *head)
         prev[i] = -1;
         visited[i] = 0;
     }
-    dist[startNodeID] = 0;
+    dist[source] = 0;
     node *temp = head;
     while (temp != NULL)
     {
@@ -181,13 +182,21 @@ void shortestPathFunc(int startNodeID, int endNodeID, node *head)
         }
         temp = temp->next;
     }
-    return dist[endNodeID];
+    int path = 0;
+    int temp3 = target;
+    while (temp3 != source)
+    {
+        path += dist[temp3];
+        temp3 = prev[temp3];
+    }
+    return path;
 }
+  
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void travelingSalesman(node *head){
+void T(node *head){
     int *dist = malloc(sizeof(int) * 100);
     int *prev = malloc(sizeof(int) * 100);
     int *visited = malloc(sizeof(int) * 100);
@@ -240,7 +249,7 @@ void travelingSalesman(node *head){
     }
     if (minIndex == -1)
     {
-        break;
+        return;
     }
     visited[minIndex] = 1;
     edge *temp2 = temp->edge;

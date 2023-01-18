@@ -27,7 +27,7 @@ int main()
             S(graph);
             break;
         case 'T':
-            T();
+            T(graph);
             break;
         }
     }

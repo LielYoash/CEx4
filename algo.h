@@ -11,7 +11,6 @@ void A(node *head);
 void B(node *head);
 void D(node *head);
 void S(node *head);
-void shortestPathFunc(int startNodeID, int endNodeID, node *head);
-
-
+void T(node *head);
+int shortestPathFunc( int source, int target, node *head);
 #endif
