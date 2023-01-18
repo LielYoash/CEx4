@@ -4,7 +4,12 @@
 // Description: Header file for nodes.c
 
 typedef struct Edge edge;
-typedef struct Node node;
+
+typedef struct Node{
+    int nodeID;
+    struct edge *edge;
+    struct node *next;
+} node;
 
 
 node *createNode(int id);

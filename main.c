@@ -16,18 +16,18 @@ int main()
         case 'A':
             A;
             break;
-        case 'B':
-            B;
-            break;
-        case 'D':
-            D;
-            break;
-        case 'S':
-            S;
-            break;
-        case 'T':
-            T;
-            break;
+        // case 'B':
+        //     B;
+        //     break;
+        // case 'D':
+        //     D;
+        //     break;
+        // case 'S':
+        //     S;
+        //     break;
+        // case 'T':
+        //     T;
+        //     break;
         }
     }
 }

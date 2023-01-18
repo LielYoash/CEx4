@@ -4,11 +4,7 @@
 #include "nodes.h"
 
 
-typedef struct Node{
-    int nodeID;
-    struct edge *edge;
-    struct node *next;
-} node;
+
 
 node *createNode(int id);
 void deleteNodes(int id, node *head);
@@ -21,8 +17,8 @@ node *createNode(int id) {
         return NULL;
     }
     node->nodeID = id;
-    node->next = NULL;
     node->edge = NULL;
+    node->next = NULL;
     return node;
 }
 
@@ -60,7 +56,7 @@ node getNode(int id, node *head){
         }
         temp = temp->next;
     }
-    return NULL;
+    return *temp;
 }
 
 

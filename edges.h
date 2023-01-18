@@ -4,8 +4,14 @@
 // Description: Header file for edges.c
 
 typedef struct Node node;
-typedef struct Edge edge;
 
+typedef struct Edge
+{
+    int startNode;
+    int endNode;
+    int weight;
+    struct edge *next;
+} edge;
 
 edge *createEdge(node *endNode, int weight);
 void deleteEdges(int nodeID, node *node, edge *edge);

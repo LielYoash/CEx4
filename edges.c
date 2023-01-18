@@ -4,13 +4,7 @@
 #include "edges.h"
 #include "nodes.h"
 
-typedef struct Edge
-{
-    int startNode;
-    int endNode;
-    int weight;
-    struct edge *next;
-} edge;
+
 
 edge *createEdge(node *endNode, int weight);
 void deleteEdges(int nodeID, node *node, edge *edge);
@@ -20,7 +14,7 @@ void cleanEdges(edge *edge);
 
 edge *createEdge(node *endNode, int weight)
 {
-    edge *edge = malloc(sizeof(Edge));
+    edge *edge = malloc(sizeof(edge));
     if (edge == NULL)
     {
         return NULL;
@@ -31,11 +25,11 @@ edge *createEdge(node *endNode, int weight)
     return edge;
 }
 
-void deleteEdges(int nodeID, node *node, edge *edge)
+void deleteEdges(int nodeID, node *node, edge *e)
 {
-    if (edge == NULL)
+    if (e == NULL)
         return;
-    edge *temp = edge;
+    edge *temp = e;
     edge *prev = NULL;
     while (temp != NULL)
     {
@@ -43,7 +37,7 @@ void deleteEdges(int nodeID, node *node, edge *edge)
         {
             if (prev == NULL)
             {
-                edge = temp->next;
+                e = temp->next;
             }
             else
             {
@@ -57,8 +51,8 @@ void deleteEdges(int nodeID, node *node, edge *edge)
     }
 }
 
-void addEdgeToEnd(node dest,int weight, node *head){
-    node *temp = head;
+void insertEdge(node *dest,int weight, node *head){
+    edge *temp = head->edge;
     while (temp->next != NULL) {
         temp = temp->next;
     }
@@ -67,17 +61,26 @@ void addEdgeToEnd(node dest,int weight, node *head){
 
 void addEdge(int src, int dest, int weight, node *head){
     node *temp = head;
+    node *source = NULL;
+    node *destination = NULL;
     while (temp != NULL) {
         if (temp->nodeID == src) {
-            addEdgeToEnd(dest,weight,temp);
+            source = temp;
+        }
+        if (temp->nodeID == dest) {
+            destination = temp;
         }
         temp = temp->next;
     }
+    if(!source || !destination){
+        return;
+    }
+    insertEdge(destination,weight,source);
 }
 
-void cleanEdges(edge *edge)
+void cleanEdges(edge *e)
 {
-    edge *temp = edge;
+    edge *temp = e;
     while (temp != NULL)
     {
         edge *temp2 = temp;
