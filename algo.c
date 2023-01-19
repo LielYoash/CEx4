@@ -69,10 +69,10 @@ void A(node *head)
     {
         deleteGraph(head);
     }
-    
     int numOfNodes, startNodeId, endNodeId, weight;
     char init;
     scanf("%d", &numOfNodes);
+    head = createNode(-1);
     for (int i = 0; i < numOfNodes; i++)
     {
         addNodeToEnd(head, i);
@@ -90,6 +90,7 @@ void A(node *head)
         }
     }
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +233,7 @@ int arrayCalculate(node *head, int cities[], int size)
     int distance = 0;
     for (size_t i = 0; i < size - 1; i++)
     {
-        int path = shortestPathFunc(head, cities[i], cities[i + 1]);
+        int path = shortestPathFunc(cities[i], cities[i + 1], head);
         if (path == -1)
         {
             return INT_MAX;
@@ -241,6 +242,7 @@ int arrayCalculate(node *head, int cities[], int size)
     }
     return distance;
 }
+
 
 void swap(int *a, int *b)
 {
