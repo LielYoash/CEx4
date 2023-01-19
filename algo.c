@@ -10,13 +10,13 @@
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 void deleteGraph(node *head);
-int min(int a, int b);
 void A(node *head);
 void B(node *head);
 void D(node *head);
 void S(node *head);
 void T(node *head);
-int shortestPathFunc( int source, int target, node *head);
+int shortestPathFunc(int source, int target, node *head);
+int countNodes(node *head);
 
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head)
 {
@@ -48,19 +48,16 @@ void deleteGraph(node *head)
     }
 }
 
-int max(int a, int b){
-    if(a==0){
-        return b;
+int countNodes(node *head)
+{
+    int count = 0;
+    node *temp = head;
+    while (temp != NULL)
+    {
+        count++;
+        temp = temp->next;
     }
-    if(b==0){
-        return a;
-    }
-    if(a>b){
-        return a;
-    }
-    else{
-        return b;
-    }
+    return count;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,8 +94,7 @@ void B(node *head)
 {
     int startNodeID, endNodeID, weight;
     scanf("%d", &startNodeID);
-    node *temp = head;
-    *temp = getNode(startNodeID, head);
+    node *temp = getNode(startNodeID, head);
     if (temp == NULL)
     {
         addNodeToEnd(head, startNodeID);
@@ -142,81 +138,59 @@ void S(node *head)
     printf("Dijsktra shortest path: %d \n", shortestPathFunc(startNodeID, endNodeID, head));
 }
 
-int shortestPathFunc(int startNodeID, int endNodeID, node *head) {
-    if (!head) return -1;
-    int n = 0;
-    node *curr = head;
-    while (curr) {
-        n = max(n, curr->nodeID);
-        curr = curr->next;
+int shortestPathFunc(int startNodeID, int endNodeID, node *head)
+{
+    if (head == NULL)
+        return -1;
+    if (startNodeID == endNodeID)
+        return 0;
+    node *start = getNode(startNodeID, head);
+    node *end = getNode(endNodeID, head);
+    if (start == NULL || end == NULL)
+        return -1;
+
+    int numberOfNodes = countNodes(head);
+    int distance[numberOfNodes], visited[numberOfNodes], previous[numberOfNodes];
+    for (int i = 0; i < numberOfNodes; i++)
+    {
+        distance[i] = INT_MAX;
+        visited[i] = 0;
+        previous[i] = -1;
     }
-    n++;
-    int dist[n];
-    bool visited[n];
-    int heap[n], pos[n];
-    int size = 0;
 
-    for (int i = 0; i < n; i++) {
-        dist[i] = INT_MAX;
-        visited[i] = false;
-    }
-
-    dist[startNodeID] = 0;
-    heap[size] = startNodeID;
-    pos[startNodeID] = size;
-    size++;
-
-    while (size != 0) {
-        int u = heap[0], v;
-        pos[u] = pos[heap[size - 1]];
-        heap[0] = heap[size - 1];
-        size--;
-        int index = 0;
-        do {
-            index = (2 * index + 1);
-            if ((2 * index + 2 < size) && dist[heap[2 * index + 2]] < dist[heap[index]])
-                index = 2 * index + 2;
-            if (index < size) {
-                int temp = heap[index];
-                heap[index] = heap[pos[u]];
-                heap[pos[u]] = temp;
-                pos[heap[index]] = index;
-                pos[u] = pos[u];
-            }
-        } while (index < size);
-        visited[u] = true;
-        node *curr = head;
-        while (curr && curr->nodeID != u) {
-            curr = curr->next;
-        }
-        if (!curr) continue;
-        for (edge *e = curr->edge; e; e = e->next) {
-            v = e->endNode;
-            int weight = e->weight;
-            if (!visited[v] && dist[u] + weight < dist[v]) {
-                dist[v] = dist[u] + weight;
-                if (pos[v] == -1) {
-                    heap[size] = v;
-                    pos[v] = size;
-                    size++;
-                }
-                int temp = pos[v];
-                while (temp > 0 && dist[heap[(temp - 1) / 2]] > dist[heap[temp]]) {
-                    int t = heap[temp];
-                    heap[temp] = heap[(temp - 1) / 2];
-                    heap[(temp - 1) / 2] = t;
-                    pos[heap[temp]] = temp;
-                    pos[heap[(temp - 1) / 2]] = (temp - 1) / 2;
-                    temp = (temp - 1) / 2;
+    distance[startNodeID] = 0;
+    int currentNode = startNodeID;
+    while (currentNode != endNodeID)
+    {
+        visited[currentNode] = 1;
+        edge *temp = start->edge;
+        while (temp != NULL)
+        {
+            if (visited[temp->endNode] == 0)
+            {
+                if (distance[temp->endNode] > distance[currentNode] + temp->weight)
+                {
+                    distance[temp->endNode] = distance[currentNode] + temp->weight;
+                    previous[temp->endNode] = currentNode;
                 }
             }
+            temp = temp->next;
         }
+        int minDistance = INT_MAX;
+        currentNode = -1;
+        for (int i = 0; i < numberOfNodes; i++)
+        {
+            if (visited[i] == 0 && distance[i] < minDistance)
+            {
+                minDistance = distance[i];
+                currentNode = i;
+            }
+        }
+        if (currentNode == -1)
+            break;
     }
-    if (dist[endNodeID] == INT_MAX) return -1;
-    return dist[endNodeID];
+    return distance[endNodeID];
 }
-
-  
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

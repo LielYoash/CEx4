@@ -8,7 +8,7 @@
 node *createNode(int id);
 void deleteNodes(int id, node *head);
 void addToEnd(node *head, int id);
-node getNode(int id, node *head);
+node *getNode(int id, node *head);
 
 node *createNode(int id) {
     node *node = malloc(sizeof(node));
@@ -47,15 +47,16 @@ void addNodeToEnd(node *head, int id){
     temp->next = createNode(id);
 }
 
-node getNode(int id, node *head){
+node* getNode(int id, node *head){
     node *temp = head;
     while (temp != NULL) {
         if (temp->nodeID == id) {
-            return *temp;
+            return temp;
         }
         temp = temp->next;
     }
-    return *temp;
+    return temp;
 }
+
 
 
