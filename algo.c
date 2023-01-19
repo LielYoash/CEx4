@@ -139,7 +139,7 @@ void S(node *head)
 {
     int startNodeID, endNodeID;
     scanf("%d %d", &startNodeID, &endNodeID);
-    printf("%d", shortestPathFunc(startNodeID, endNodeID, head));
+    printf("Dijsktra shortest path: %d \n", shortestPathFunc(startNodeID, endNodeID, head));
 }
 
 int shortestPathFunc(int startNodeID, int endNodeID, node *head) {
