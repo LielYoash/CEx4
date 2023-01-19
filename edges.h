@@ -7,8 +7,7 @@ typedef struct Node node;
 
 typedef struct Edge
 {
-    int startNode;
-    int endNode;
+    node *endNode;
     int weight;
     struct edge *next;
 } edge;

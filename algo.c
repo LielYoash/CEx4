@@ -145,56 +145,54 @@ void S(node *head)
 
 int shortestPathFunc(int startNodeID, int endNodeID, node *head)
 {
-    if (head == NULL)
-        return -1;
-    if (startNodeID == endNodeID)
-        return 0;
-    node *start = getNode(startNodeID, head);
-    node *end = getNode(endNodeID, head);
-    if (start == NULL || end == NULL)
-        return -1;
+if (head == NULL)
+return -1;
+if (startNodeID == endNodeID)
+return 0;
+node *start = getNode(startNodeID, head);
+node *end = getNode(endNodeID, head);
+if (start == NULL || end == NULL)
+return -1;
+int numberOfNodes = countNodes(head);
+int distance[numberOfNodes], visited[numberOfNodes];
+for (int i = 0; i < numberOfNodes; i++)
+{
+    distance[i] = INT_MAX;
+    visited[i] = 0;
+}
 
-    int numberOfNodes = countNodes(head);
-    int distance[numberOfNodes], visited[numberOfNodes], previous[numberOfNodes];
-    for (int i = 0; i < numberOfNodes; i++)
+distance[startNodeID] = 0;
+
+for (int i = 0; i < numberOfNodes - 1; i++)
+{
+    int min = INT_MAX, minIndex;
+    for (int j = 0; j < numberOfNodes; j++)
     {
-        distance[i] = INT_MAX;
-        visited[i] = 0;
-        previous[i] = -1;
+        if (visited[j] == 0 && distance[j] <= min)
+        {
+            min = distance[j];
+            minIndex = j;
+        }
     }
 
-    distance[startNodeID] = 0;
-    int currentNode = startNodeID;
-    while (currentNode != endNodeID)
+    visited[minIndex] = 1;
+
+    edge *temp = start->edge;
+    while (temp != NULL)
     {
-        visited[currentNode] = 1;
-        edge *temp = start->edge;
-        while (temp != NULL)
+        if (!visited[temp->endNode->nodeID])
         {
-            if (visited[temp->endNode] == 0)
+            int newDist = distance[minIndex] + temp->weight;
+            if (newDist < distance[temp->endNode->nodeID])
             {
-                if (distance[temp->endNode] > distance[currentNode] + temp->weight)
-                {
-                    distance[temp->endNode] = distance[currentNode] + temp->weight;
-                    previous[temp->endNode] = currentNode;
-                }
-            }
-            temp = temp->next;
-        }
-        int minDistance = INT_MAX;
-        currentNode = -1;
-        for (int i = 0; i < numberOfNodes; i++)
-        {
-            if (visited[i] == 0 && distance[i] < minDistance)
-            {
-                minDistance = distance[i];
-                currentNode = i;
+                distance[temp->endNode->nodeID] = newDist;
             }
         }
-        if (currentNode == -1)
-            break;
+        temp = temp->next;
     }
-    return distance[endNodeID];
+}
+
+return distance[endNodeID];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

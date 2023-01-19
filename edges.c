@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "edges.h"
@@ -6,7 +5,7 @@
 
 edge *createEdge(node *endNode, int weight);
 void deleteEdges(int nodeID, node *node, edge *edge);
-void insertEdgeToEnd(node *dest,int weight, node *head);
+void insertEdgeToEnd(node *dest, int weight, node *head);
 void addEdge(int src, int dest, int weight, node *head);
 void cleanEdges(edge *edge);
 
@@ -31,7 +30,7 @@ void deleteEdges(int nodeID, node *node, edge *e)
     edge *prev = NULL;
     while (temp != NULL)
     {
-        if (temp->endNode == nodeID)
+        if (temp->endNode->nodeID == nodeID)
         {
             if (prev == NULL)
             {
@@ -49,31 +48,45 @@ void deleteEdges(int nodeID, node *node, edge *e)
     }
 }
 
-void insertEdgeToEnd(node *dest,int weight, node *head){
+void insertEdgeToEnd(node *dest, int weight, node *head)
+{
     edge *temp = head->edge;
-    while (temp->next != NULL) {
-        temp = temp->next;
+    if (temp == NULL)
+    {
+        head->edge = createEdge(dest, weight);
     }
-    temp->next = createEdge(dest,weight);
+    else
+    {
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = createEdge(dest, weight);
+    }
 }
 
-void addEdge(int src, int dest, int weight, node *head){
+void addEdge(int src, int dest, int weight, node *head)
+{
     node *temp = head;
     node *source = NULL;
     node *destination = NULL;
-    while (temp != NULL) {
-        if (temp->nodeID == src) {
+    while (temp != NULL)
+    {
+        if (temp->nodeID == src)
+        {
             source = temp;
         }
-        if (temp->nodeID == dest) {
+        if (temp->nodeID == dest)
+        {
             destination = temp;
         }
         temp = temp->next;
     }
-    if(!source || !destination){
+    if (!source || !destination)
+    {
         return;
     }
-    insertEdgeToEnd(destination,weight,source);
+    insertEdgeToEnd(destination, weight, source);
 }
 
 void cleanEdges(edge *e)
