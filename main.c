@@ -7,17 +7,17 @@
 int main()
 {
     char c;
-    node *graph = NULL;
+    node *graph = createNode(-1);
+    scanf("%c", &c);
     while (1)
     {
-        scanf("%c", &c);
         switch (c)
         {
         case 'A':
-            A(graph);
+            c= A(graph);
             break;
         case 'B':
-            B(graph);
+            c= B(graph);
             break;
         case 'D':
             D(graph);
@@ -30,5 +30,4 @@ int main()
             break;
         }
     }
-    deleteGraph(graph);
 }
