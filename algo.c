@@ -65,7 +65,11 @@ int countNodes(node *head)
 
 void A(node *head)
 {
-    deleteGraph(head);
+    if (head != NULL)
+    {
+        deleteGraph(head);
+    }
+    
     int numOfNodes, startNodeId, endNodeId, weight;
     char init;
     scanf("%d", &numOfNodes);
