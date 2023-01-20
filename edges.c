@@ -22,34 +22,6 @@ edge *createEdge(node *endNode, int weight)
     return edge;
 }
 
-void deleteEdges(int nodeID, node *node, edge *e)
-{
-    if (e == NULL)
-        return;
-    edge *temp = e;
-    edge *prev = e;
-    while (temp != NULL)
-    {
-        if (temp->endNode->nodeID == nodeID)
-        {
-            if (prev == NULL)
-            {
-                prev = temp->next;
-                free(temp);
-                temp = prev;
-            }
-            else
-            {
-                prev->next = temp->next;
-            }
-            free(temp);
-            return;
-        }
-        prev = temp;
-        temp = temp->next;
-    }
-}
-
 void insertEdgeToEnd(node *dest, int weight, node *head)
 {
     edge *temp = head->edge;

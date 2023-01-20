@@ -12,24 +12,6 @@ int main()
     while (scanf("%c", &c) != EOF)
     {
         menu(c,graph);
-//        switch (c)
-//        {
-//        case 'A':
-//            c= A(graph);
-//            break;
-//        case 'B':
-//            c= B(graph);
-//            break;
-//        case 'D':
-//            D(graph);
-//            break;
-//        case 'S':
-//            S(graph);
-//            break;
-//        case 'T':
-//            T(graph);
-//            break;
-//        }
     }
     deleteGraph(graph);
     return 0;

@@ -77,15 +77,6 @@ void deleteGraph(node *head) {
     }
 }
 
-int countNodes(node *head) {
-    int count = 0;
-    node *temp = head;
-    while (temp != NULL) {
-        count++;
-        temp = temp->next;
-    }
-    return count;
-}
 
 int min(int a, int b) {
     return (a == 0) ? b : (b == 0) ? a
