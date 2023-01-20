@@ -8,28 +8,6 @@
 
 #define MILLION 1000000
 
-void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
-
-void deleteGraph(node *head);
-
-void A(node *head);
-
-void B(node *head);
-
-void D(node *head);
-
-void S(node *head);
-
-void T(node *head);
-
-int shortestPathLength(int source, int target, node *head);
-
-void permutation(node *head, int *cities, int start, int end, int *perm, int *ind);
-
-void swap(int *a, int *b);
-
-int factorial(int num);
-
 void menu(char c, node *graph) {
     switch (c) {
         case 'A':

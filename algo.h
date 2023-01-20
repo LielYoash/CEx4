@@ -14,4 +14,8 @@ void T(node *head);
 int shortestPathLength(int source, int target, node *head);
 void find_minimum(int perm[], int n);
 void menu(char c, node *graph);
+void permutation(node *head, int *cities, int start, int end, int *perm, int *ind);
+void swap(int *a, int *b);
+int factorial(int num);
+
 #endif

@@ -16,5 +16,8 @@ node *createNode(int id);
 void deleteNodes(node *head);
 void addNodeToEnd(node *head, int id);
 node *getNode(int id, node *head);
+void deleteEdges(node *head, node *dNode);
+void removeEdgeFromList(node *temp, edge *dEdge);
+void deleteNodeFromList(node *head, node *dNode);
 
 #endif
