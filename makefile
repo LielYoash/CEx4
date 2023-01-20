@@ -28,5 +28,5 @@ edges.o: edges.c $(LIBS)
 .PHONY: all clean graph functions
 
 clean:	
-	rm -f *.o *.so main graph
+	rm -f *.o *.so graph
 
