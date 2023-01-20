@@ -7,6 +7,7 @@
 #include <limits.h>
 
 #define MILLION 1000000
+
 void funcHelper(int startNodeID, int endNodeId, int weight, node *head);
 
 void deleteGraph(node *head);
@@ -98,10 +99,9 @@ int min(int a, int b) {
 void A(node *head) {
     int numOfNodes, startNodeId, endNodeId, weight;
     scanf(" %d", &numOfNodes);
-    node* curr = head;
+    node *curr = head;
     for (int i = 1; i < numOfNodes; i++) {
         addNodeToEnd(curr, i);
-        curr= curr->next;
     }
     char init = 0;
 
@@ -140,16 +140,7 @@ void B(node *head) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void D(node *head) {
-    int id;
-    scanf("%d", &id);
-    node *temp = head;
-    while (temp != NULL) {
-        if (temp->nodeID == id) {
-            deleteEdges(temp->nodeID, temp, temp->edge);
-        }
-        temp = temp->next;
-    }
-    deleteNodes(id, head);
+    deleteNodes(head);
     menu(getchar(), head);
 }
 
@@ -265,12 +256,10 @@ void permutation(node *head, int *cities, int start, int end, int *perm, int *in
     if (start == end) {
         int curr_permutation_length = calcArray(head, cities, end + 1);
         perm[(*ind)++] = curr_permutation_length;
-        printf("permutation (%d, %d, %d) = %d \n", cities[0], cities[1], cities[2], curr_permutation_length);
         return;
     }
     int i;
-    for (i = start; i <= end; i++)
-    {
+    for (i = start; i <= end; i++) {
         swap((cities + i), (cities + start));
         permutation(head, cities, start + 1, end, perm, ind);
         swap((cities + i), (cities + start));
@@ -281,7 +270,7 @@ void find_minimum(int perm[], int n) {
     int minWeight = INT_MAX;
 
     for (int i = 0; i < n; i++) {
-        if(perm[i] != -1){
+        if (perm[i] != -1) {
             if (perm[i] < minWeight) {
                 minWeight = perm[i];
             }

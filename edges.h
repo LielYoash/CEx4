@@ -17,5 +17,7 @@ void deleteEdges(int nodeID, node *node, edge *edge);
 void insertEdgeToEnd(node *dest,int weight, node *head);
 void addEdge(int src, int dest, int weight, node *head);
 void cleanEdges(edge *edge);
+edge *getEdge(node *head, node *end);
+
 
 #endif

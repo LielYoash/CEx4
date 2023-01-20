@@ -27,14 +27,16 @@ void deleteEdges(int nodeID, node *node, edge *e)
     if (e == NULL)
         return;
     edge *temp = e;
-    edge *prev = NULL;
+    edge *prev = e;
     while (temp != NULL)
     {
         if (temp->endNode->nodeID == nodeID)
         {
             if (prev == NULL)
             {
-                e = temp->next;
+                prev = temp->next;
+                free(temp);
+                temp = prev;
             }
             else
             {
@@ -99,3 +101,15 @@ void cleanEdges(edge *e)
         free(temp2);
     }
 }
+ edge *getEdge(node *head, node *end){
+         edge *temp_edge = head->edge;
+         while (temp_edge)
+         {
+             if (temp_edge->endNode == end)
+             {
+                 return temp_edge;
+             }
+             temp_edge = temp_edge->next;
+         }
+         return NULL;
+     }

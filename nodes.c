@@ -6,8 +6,8 @@
 #include "algo.h"
 
 node *createNode(int id);
-void deleteNodes(int id, node *head);
-void addToEnd(node *head, int id);
+void deleteNodes(node *head);
+void addNodeToEnd(node *head, int id);
 node *getNode(int id, node *head);
 
 node *createNode(int id) {
@@ -21,21 +21,53 @@ node *createNode(int id) {
     return node;
 }
 
-void deleteNodes(int id, node *head){
-    node *temp = head;
-    node *prev = NULL;
-    while (temp != NULL) {
-        if (temp->nodeID == id) {
-            if (prev == NULL) {
-                head = temp->next;
-            } else {
-                prev->next = temp->next;
+void deleteNodes(node *head){
+    int id;
+    scanf("%d", &id);
+    node *nodeToDelete = getNode(id,head);
+    if (nodeToDelete != NULL)
+    {
+        // remove edges pointing to this node
+        node *temp = head;
+        while (temp != NULL)
+        {
+            edge *edgeToDelete = getEdge(temp, nodeToDelete);
+            if (edgeToDelete != NULL)
+            {
+                // remove the edge
+                if (temp->edge == edgeToDelete)
+                {
+                    temp->edge = edgeToDelete->next;
+                }
+                else
+                {
+                    edge *prevEdge = temp->edge;
+                    while (prevEdge->next != edgeToDelete)
+                    {
+                        prevEdge = prevEdge->next;
+                    }
+                    prevEdge->next = edgeToDelete->next;
+                }
+                free(edgeToDelete);
             }
-            free(temp);
-            return;
+            temp = temp->next;
         }
-        prev = temp;
-        temp = temp->next;
+
+        // remove the node
+        if (head == nodeToDelete)
+        {
+            head = nodeToDelete->next;
+        }
+        else
+        {
+            node *prevNode = head;
+            while (prevNode->next != nodeToDelete)
+            {
+                prevNode = prevNode->next;
+            }
+            prevNode->next = nodeToDelete->next;
+        }
+        free(nodeToDelete);
     }
 }
 
