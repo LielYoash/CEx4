@@ -57,10 +57,11 @@ void deleteGraph(node *head) {
 
 
 int min(int a, int b) {
-    return (a == 0) ? b : (b == 0) ? a
-                                   : (a < b) ? a
-                                             : b;
+    if (a == 0) return b;
+    if (b == 0) return a;
+    return a < b ? a : b;
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,12 +121,11 @@ void S(node *head) {
     int startNodeID, endNodeID, shortest;
     scanf(" %d", &startNodeID);
     scanf(" %d", &endNodeID);
-//    shortestPathLength()
     shortest = shortestPathLength(startNodeID, endNodeID, head);
     printf("Dijkstra shortest path: %d \n", shortest);
 }
 
-int shortestPathLength(int source, int target, node *head) {
+int getNumNodes(node *head) {
     if (head == NULL) {
         return -1;
     }
@@ -137,48 +137,63 @@ int shortestPathLength(int source, int target, node *head) {
         }
         pNode = pNode->next;
     }
-    ctr += 1;
-    int mat[ctr][ctr];
+    return ctr + 1;
+}
 
-    for (int k = 0; k < ctr; k++) {
-        for (int i = 0; i < ctr; i++) {
-            mat[k][i] = MILLION;
+void initMatrix(int mat[], int numNodes) {
+    for (int k = 0; k < numNodes; k++) {
+        for (int i = 0; i < numNodes; i++) {
+            mat[k*numNodes+i] = MILLION;
         }
     }
+}
 
-    pNode = head;
+void fillMatrix(int mat[], node *head, int numNodes) {
+    node *pNode = head;
     while (pNode) {
         edge *pEdge = pNode->edge;
         while (pEdge) {
-            mat[pNode->nodeID][pEdge->endNode->nodeID] = pEdge->weight;
+            mat[pNode->nodeID*numNodes+pEdge->endNode->nodeID] = pEdge->weight;
             pEdge = pEdge->next;
         }
         pNode = pNode->next;
     }
+}
 
-    for (int k = 0; k < ctr; k++) {
-        for (int i = 0; i < ctr; i++) {
-            for (int j = 0; j < ctr; j++) {
+void floydWarshall(int mat[], int numNodes) {
+    for (int k = 0; k < numNodes; k++) {
+        for (int i = 0; i < numNodes; i++) {
+            for (int j = 0; j < numNodes; j++) {
                 if (i == j) {
-                    mat[i][i] = 0;
+                    mat[i*numNodes+i] = 0;
                 } else if (i == k || j == k) {
-                    mat[i][j] = mat[i][j];
+                    mat[i*numNodes+j] = mat[i*numNodes+j];
                 } else {
-                    int b = mat[i][k] + mat[k][j];
-                    if (mat[i][k] == 0 || mat[k][j] == 0) {
+                    int b = mat[i*numNodes+k] + mat[k*numNodes+j];
+                    if (mat[i*numNodes+k] == 0 || mat[k*numNodes+j] == 0) {
                         b = 0;
                     }
-                    mat[i][j] = min(mat[i][j], b);
+                    mat[i*numNodes+j] = min(mat[i*numNodes+j], b);
                 }
             }
         }
     }
-    if (mat[source][target] == MILLION) {
-        return -1;
-    }
-    return mat[source][target];
 }
 
+int shortestPathLength(int source, int target, node *head) {
+    int numNodes = getNumNodes(head);
+    if (numNodes == -1) {
+        return -1;
+    }
+    int mat[numNodes*numNodes];
+    initMatrix(mat, numNodes);
+    fillMatrix(mat, head, numNodes);
+    floydWarshall(mat, numNodes);
+    if (mat[source*numNodes+target] == MILLION) {
+        return -1;
+    }
+    return mat[source*numNodes+target];
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,7 +266,6 @@ void find_minimum(int perm[], int n) {
     } else {
         printf("TSP shortest path: %d \n", minWeight);
     }
-//    return index;
 }
 
 int factorial(int num) {
