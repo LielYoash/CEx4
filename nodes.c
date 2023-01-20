@@ -24,50 +24,40 @@ node *createNode(int id) {
 void deleteNodes(node *head){
     int id;
     scanf("%d", &id);
-    node *nodeToDelete = getNode(id,head);
-    if (nodeToDelete != NULL)
+    node *dNode = getNode(id, head);
+    if (!dNode)
     {
-        // remove edges pointing to this node
         node *temp = head;
-        while (temp != NULL)
+        while (!temp)
         {
-            edge *edgeToDelete = getEdge(temp, nodeToDelete);
-            if (edgeToDelete != NULL)
+            edge *dEdge = getEdge(temp, dNode);
+            if (!dEdge)
             {
-                // remove the edge
-                if (temp->edge == edgeToDelete)
+                if (temp->edge == dEdge)
                 {
-                    temp->edge = edgeToDelete->next;
+                    temp->edge = dEdge->next;
                 }
                 else
                 {
-                    edge *prevEdge = temp->edge;
-                    while (prevEdge->next != edgeToDelete)
+                    edge *pEdge = temp->edge;
+                    while (pEdge->next != dEdge)
                     {
-                        prevEdge = prevEdge->next;
+                        pEdge = pEdge->next;
                     }
-                    prevEdge->next = edgeToDelete->next;
+                    pEdge->next = dEdge->next;
                 }
-                free(edgeToDelete);
+                free(dEdge);
             }
             temp = temp->next;
         }
-
-        // remove the node
-        if (head == nodeToDelete)
-        {
-            head = nodeToDelete->next;
-        }
-        else
-        {
             node *prevNode = head;
-            while (prevNode->next != nodeToDelete)
+            while (prevNode->next != dNode)
             {
                 prevNode = prevNode->next;
             }
-            prevNode->next = nodeToDelete->next;
-        }
-        free(nodeToDelete);
+            prevNode->next = dNode->next;
+
+        free(dNode);
     }
 }
 
